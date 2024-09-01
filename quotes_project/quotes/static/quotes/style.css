@@ -59,3 +59,35 @@ a {
     margin-top: 30px;
     float: right;
 }
+
+.pager {
+    font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.pager {
+    padding-left: 0;
+    margin: 22px 0;
+    list-style: none;
+    text-align: center;
+}
+
+.pager .previous>a, .pager .previous>span {
+    float: left;
+}
+
+.pager li {
+    display: inline;
+}
+
+.pager li>a, .pager li>span {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+}
+
+.disabled {
+    color: #333333;
+}
+
