@@ -18,13 +18,23 @@
                     <a href="/" style="text-decoration: none">Quotes to Scrape</a>
                 </h1>
             </div>
+            {% if user.is_authenticated %}
+            <ul>
+                <p>Welcome, <b>{{ user.username }}!</b></p>
+            </ul>
             <div class="col-md-4">
                 <p>
-                    <a href="/login" class="btn btn-primary">Sign up</a>
-                    <a href="/login" class="btn btn-primary">Login</a>
-                    <a href="/login" class="btn btn-primary">Logout</a>
+                    <a href="/users/logout" class="btn btn-primary">Logout</a>
                 </p>
             </div>
+            {% else %}
+            <div class="col-md-4">
+                <p>
+                    <a href="/users/signup" class="btn btn-primary">Sign up</a>
+                    <a href="/users/login" class="btn btn-primary">Login</a>
+                </p>
+            </div>
+            {% endif %}
         </div>
 
         {% block content %} {% endblock %}
