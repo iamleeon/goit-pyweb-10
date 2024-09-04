@@ -34,12 +34,18 @@ def quote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
-            new_quote = form.save()
+            # Get the selected author
+            author_id = request.POST.get('author')
+            selected_author = Author.objects.get(id=author_id)
+            # Save the quote with the selected author
+            new_quote = form.save(commit=False)
+            new_quote.author = selected_author
+            new_quote.save()
 
-            choice_authors = Author.objects.filter(fullname__in=request.POST.getlist('authors'))
+            # choice_authors = Author.objects.filter(fullname__in=request.POST.getlist('authors'))
 
-            for an_author in choice_authors.iterator():
-                new_quote.author = an_author
+            # for an_author in choice_authors.iterator():
+            #     new_quote.author = an_author
 
             return redirect(to='quotes:root')
         else:
