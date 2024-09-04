@@ -96,3 +96,11 @@ form {
     margin-top: 0em;
     unicode-bidi: isolate;
 }
+
+.alert-error, .errorlist {
+    color: crimson;
+}
+
+.alert-success {
+    color: green;
+}
