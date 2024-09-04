@@ -1,15 +1,20 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 
 from .utils import get_mongodb
 from .forms import AuthorForm, QuoteForm
-from .models import Author
+from .models import Author, Quote, Tag
 
 
 # Create your views here.
 def main(request, page=1):
-    db = get_mongodb()
-    quotes = db.quotes.find()
+    # mongo setup
+    # db = get_mongodb()
+    # quotes = db.quotes.find()
+
+    # postgres setup
+    quotes = Quote.objects.all()  # Fetch quotes from PostgresSQL
+
     quotes_per_page = 10
     paginator = Paginator(list(quotes), quotes_per_page)
     quotes_displayed_on_page = paginator.page(page)
@@ -52,3 +57,21 @@ def quote(request):
             return render(request, 'quotes/quote.html', {'authors': authors, 'form': form})
 
     return render(request, 'quotes/quote.html', {'authors': authors, 'form': QuoteForm()})
+
+
+def author_about(request, author_id):
+    author = get_object_or_404(Author, id=author_id)
+    return render(request, 'quotes/author_about.html', {'author': author})
+
+
+def tags(request, tag_name, page=1):
+    tag = get_object_or_404(Tag, name=tag_name)
+    quotes = Quote.objects.filter(tags=tag)
+    quotes_per_page = 10
+    paginator = Paginator(quotes, quotes_per_page)
+    quotes_displayed_on_page = paginator.page(page)
+
+    return render(request, 'quotes/tags.html', {
+        'tag_name': tag_name,
+        'quotes': quotes_displayed_on_page,
+    })
